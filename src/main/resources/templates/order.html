@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Order</title>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{~/tracking}">Jetzt Paket verfolgen</a>
+    <h1>Paket senden</h1>
+    <form th:action="@{/order}" th:object="${order}" method="post">
+        <h3>Absender</h3>
+        <div class="form-row">
+            <select th:field="*{sender.personalData.gender}">
+                <option value="man">Herr</option>
+                <option value="women">Frau</option>
+            </select>
+            <div class="form-group col-md-6">
+                <label for="inputFirstNameSender">Vorname</label>
+                <input th:field="*{sender.personalData.firstName}" type="text" class="form-control" id="inputFirstNameSender">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastNameSender">Nachname</label>
+                <input th:field="*{sender.personalData.lastName}" type="text" class="form-control" id="inputLastNameSender">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputBirthDateSender">Geburtsdatum</label>
+            <input th:field="*{sender.personalData.birthDate}" type="text" class="form-control" id="inputBirthDateSender" placeholder="dd.mm.yyyy">
+        </div>
+        <div class="form-group">
+            <label for="inputBirthPlaceSender">Geburtsort</label>
+            <input th:field="*{sender.personalData.birthPlace}" type="text" class="form-control" id="inputBirthPlaceSender">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="inputStreetSender">Straße</label>
+                <input th:field="*{sender.personalData.address.street}" type="text" class="form-control" id="inputStreetSender">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputCodeSender">PLZ</label>
+                <input th:field="*{sender.personalData.address.postalCode}" type="text" class="form-control" id="inputCodeSender">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputCitySender">Stadt</label>
+                <input th:field="*{sender.personalData.address.city}" type="text" class="form-control" id="inputCitySender">
+            </div>
+            <div class="form-group col-md-8">
+                <label for="inputCountrySender">Land</label>
+                <input th:field="*{sender.personalData.address.country}" type="text" class="form-control" id="inputCountrySender">
+            </div>
+        </div>
+        <h3>Empfänger</h3>
+        <div class="form-row">
+            <select th:field="*{recipient.personalData.gender}">
+                <option value="mr">Herr</option>
+                <option value="mrs">Frau</option>
+            </select>
+            <div class="form-group col-md-6">
+                <label for="inputFirstNameRecipient">Vorname</label>
+                <input th:field="*{recipient.personalData.firstName}" type="text" class="form-control" id="inputFirstNameRecipient">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputLastNameRecipient">Nachname</label>
+                <input th:field="*{recipient.personalData.lastName}" type="text" class="form-control" id="inputLastNameRecipient">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputBirthDateRecipient">Geburtsdatum</label>
+            <input th:field="*{recipient.personalData.birthDate}" type="text" class="form-control" id="inputBirthDateRecipient" placeholder="dd.mm.yyyy">
+        </div>
+        <div class="form-group">
+            <label for="inputBirthPlaceRecipient">Geburtsort</label>
+            <input th:field="*{recipient.personalData.birthPlace}" type="text" class="form-control" id="inputBirthPlaceRecipient">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label for="inputStreetRecipient">Straße</label>
+                <input th:field="*{recipient.personalData.address.street}" type="text" class="form-control" id="inputStreetRecipient">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputCodeRecipient">PLZ</label>
+                <input th:field="*{recipient.personalData.address.postalCode}" type="text" class="form-control" id="inputCodeRecipient">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputCityRecipient">Stadt</label>
+                <input th:field="*{recipient.personalData.address.city}" type="text" class="form-control" id="inputCityRecipient">
+            </div>
+            <div class="form-group col-md-8">
+                <label for="inputCountryRecipient">Land</label>
+                <input th:field="*{recipient.personalData.address.country}" type="text" class="form-control" id="inputCountryRecipient">
+            </div>
+        </div>
+        <h3>Produktauswahl</h3>
+        <select th:field="*{parcelType}">
+            <option value="S" selected>2Kg - 3€</option>
+            <option value="M">5Kg - 5€</option>
+            <option value="L">10Kg - 7€</option>
+        </select>
+        <button type="submit" class="btn btn-primary">senden</button>
+    </form>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
