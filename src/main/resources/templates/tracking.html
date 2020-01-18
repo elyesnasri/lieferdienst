@@ -14,6 +14,9 @@
 <div class="container">
     <h1>Paket verfolgen</h1>
     <h3>Geben PLZ und Name oder Paket Nummer ein</h3>
+    <div><tr th:unless="${#strings.isEmpty(error)}">
+        <h4 th:text="${error}"></h4>
+    </div>
     <h4><tr th:text="${type}"></h4>
     <form th:action="@{/tracking}" th:object="${searchOrder}" method="post">
         <div class="form-row">
