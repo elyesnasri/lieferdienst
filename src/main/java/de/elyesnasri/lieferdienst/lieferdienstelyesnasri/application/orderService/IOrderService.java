@@ -7,6 +7,5 @@ import java.util.Optional;
 public interface IOrderService {
     void sendParcel(Order order);
     Optional<Order> getParcel (long id);
-    Optional<Order> getParcelByNamePLZ (String name, int plz);
     Optional<Order> getParcelByNumber (String parcelNumber);
 }

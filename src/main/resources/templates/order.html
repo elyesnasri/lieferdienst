@@ -17,9 +17,11 @@
     <form th:action="@{/order}" th:object="${order}" method="post">
         <h3>Absender</h3>
         <div class="form-row">
-            <select th:field="*{sender.personalData.gender}">
-                <option value="man">Herr</option>
-                <option value="women">Frau</option>
+            <select th:field="*{sender.personalData.salutation}" id="slectsalutationsender">
+                <option th:each="salutation: ${T(de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.enums.Salutation).values()}"
+                        th:value="${salutation}"
+                        th:text="${salutation.text}">
+                </option>
             </select>
             <div class="form-group col-md-6">
                 <label for="inputFirstNameSender">Vorname</label>
@@ -58,9 +60,11 @@
         </div>
         <h3>Empfänger</h3>
         <div class="form-row">
-            <select th:field="*{recipient.personalData.gender}">
-                <option value="mr">Herr</option>
-                <option value="mrs">Frau</option>
+            <select th:field="*{recipient.personalData.salutation}" id="slectsalutationrecipient">
+                <option th:each="salutation: ${T(de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.enums.Salutation).values()}"
+                        th:value="${salutation}"
+                        th:text="${salutation.text}">
+                </option>
             </select>
             <div class="form-group col-md-6">
                 <label for="inputFirstNameRecipient">Vorname</label>
@@ -98,10 +102,16 @@
             </div>
         </div>
         <h3>Produktauswahl</h3>
-        <select th:field="*{parcelType}">
+        <select th:field="*{parcelTypes}">
             <option value="S" selected>2Kg - 3€</option>
             <option value="M">5Kg - 5€</option>
             <option value="L">10Kg - 7€</option>
+        </select>
+        <select th:field="*{parcelTypes}" id="selectparcelType">
+            <option th:each="parcel: ${parcels}"
+                    th:value="${parcel.type}"
+                    th:text="${parcel.price}">
+            </option>
         </select>
         <button type="submit" class="btn btn-primary">senden</button>
     </form>

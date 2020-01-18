@@ -6,7 +6,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface IOrderRepository extends CrudRepository<Order, Long> {
-    Optional<Order> findOrderByparcelNumber(String parcelNumber);
+    Optional<Order> findOrderByorderNumber(String orderNumber);
+
+    // TODO: delete this
     Optional<Order> findOrderByrecipient(String lastname);
-    // TODO: find by name and plz
 }

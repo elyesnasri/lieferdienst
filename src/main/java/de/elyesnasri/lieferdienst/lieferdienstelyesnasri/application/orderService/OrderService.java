@@ -20,7 +20,6 @@ public class OrderService implements IOrderService {
     public void sendParcel(Order order) {
 
         this.orderRepository.save(order);
-
         // TODO: call marco for payment
     }
 
@@ -31,15 +30,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Optional<Order> getParcelByNamePLZ(String name, int plz) {
-        // TODO implement in repository findByNameAndPLZ
-        Optional<Order> order = this.orderRepository.findOrderByrecipient(name);
-        return order;
-    }
-
-    @Override
     public Optional<Order> getParcelByNumber(String parcelNumber) {
-        Optional<Order> order = this.orderRepository.findOrderByparcelNumber(parcelNumber);
+        Optional<Order> order = this.orderRepository.findOrderByorderNumber(parcelNumber);
         return order;
     }
 }

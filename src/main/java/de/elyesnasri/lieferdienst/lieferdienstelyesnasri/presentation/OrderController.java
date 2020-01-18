@@ -1,6 +1,7 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.presentation;
 
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.IOrderService;
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.parcelService.IParcelService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.DeliveryStatus;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.Order;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.Parcel;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,16 +20,19 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private final IOrderService orderService;
+    @Autowired
+    private  final IParcelService parcelService;
 
-    public OrderController(IOrderService orderService) {
+    public OrderController(IOrderService orderService, IParcelService parcelService) {
         this.orderService = orderService;
+        this.parcelService = parcelService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/order")
     public String getOrder (Model model) {
+        List<Parcel> parcels = (List<Parcel>) parcelService.getAllPArcels();
+        model.addAttribute("parcels", parcels);
         model.addAttribute("order", new Order());
-//        List<Parcel> parcels = new ArrayList<>();
-//        parcels.add(new Parcel());
         return "order";
     }
 
@@ -36,7 +40,6 @@ public class OrderController {
     public String addOrder(@ModelAttribute("order") Order order, RedirectAttributes redirectAttributes) {
         Date now = new Date();
         order.setOrderDate(now);
-        // TODO: change gender to dropdown M | F
         // TODO: add assurance price for order
         // TODO: add parcelPRice with AssurancePrice to get totalprice
         order.setTotalPrice(10);
@@ -44,15 +47,10 @@ public class OrderController {
         delStatus.setStatusName("Wird bearbeitet");
         delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
         order.setDeliveryStatus(delStatus);
-        // TODO: generate parcel-Nr for delivery status
         order.setParcelNumber();
-        // redirectAttributes.addFlashAttribute("order", order.getParcelType());
         orderService.sendParcel(order);
 
-        // TODO: generate parcel-Nr for delivery status
-        return "redirect:/confirm/"+ order.getParcelNumber();
+        return "redirect:/confirm/"+ order.getOrderNumber();
 
-        // TODO: redirect to confirm page or just show notification
-        // TODO: in check status page: search order by parcel-Nr or LastName & PLZ
     }
 }

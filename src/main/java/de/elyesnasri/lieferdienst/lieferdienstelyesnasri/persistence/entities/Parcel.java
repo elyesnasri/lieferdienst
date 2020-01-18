@@ -7,7 +7,7 @@ public class Parcel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long parcelId;
-    private String Type;
+    private String type;
     private int price;
     private int width;
     private int height;
@@ -15,11 +15,11 @@ public class Parcel {
     private int weight;
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     public int getPrice() {

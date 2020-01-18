@@ -1,5 +1,7 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.enums.Salutation;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,7 +12,7 @@ public class PersonalData {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
     private String birthPlace;
-    private String gender;
+    private Salutation salutation;
     private Address address;
 
     public String getFirstName() {
@@ -45,12 +47,12 @@ public class PersonalData {
         this.birthPlace = birthPlace;
     }
 
-    public String getGender() {
-        return gender;
+    public Salutation getSalutation() {
+        return salutation;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setSalutation(Salutation salutation) {
+        this.salutation = salutation;
     }
 
     public Address getAddress() {

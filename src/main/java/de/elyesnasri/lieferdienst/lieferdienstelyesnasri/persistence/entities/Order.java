@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,8 +18,9 @@ public class Order {
     @ManyToOne(cascade = {CascadeType.ALL})
     private Customer sender;
     // TODO: get types from DB
-    private String parcelType;
-    private String parcelNumber;
+    @OneToOne
+    private Parcel parcelTypes;
+    private String orderNumber;
     @Temporal(TemporalType.DATE)
     private Date orderDate;
     private int totalPrice;
@@ -40,12 +42,12 @@ public class Order {
         this.sender = sender;
     }
 
-    public String getParcelType() {
-        return parcelType;
+    public Parcel getParcelTypes() {
+        return parcelTypes;
     }
 
-    public void setParcelType(String parcelType) {
-        this.parcelType = parcelType;
+    public void setParcelTypes(Parcel parcelTypes) {
+        this.parcelTypes = parcelTypes;
     }
 
     public Date getOrderDate() {
@@ -72,13 +74,13 @@ public class Order {
         this.deliveryStatus = deliveryStatus;
     }
 
-    public String getParcelNumber() {
-        return parcelNumber;
+    public String getOrderNumber() {
+        return orderNumber;
     }
 
     public void setParcelNumber() {
         String code = UUID.randomUUID().toString();
         String date = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
-        this.parcelNumber = code.concat(date);
+        this.orderNumber = code.concat(date);
     }
 }
