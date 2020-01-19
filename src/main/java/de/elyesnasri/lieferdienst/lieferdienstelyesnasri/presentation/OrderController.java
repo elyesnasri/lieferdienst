@@ -52,7 +52,7 @@ public class OrderController {
         order.setOrderDate(now);
         // TODO: add assurance price for order
         // TODO: add parcelPRice with AssurancePrice to get totalprice
-        order.setTotalPrice(10);
+        order.setTotalPrice(order.getParcelTypes().getPrice());
         DeliveryStatus delStatus = new DeliveryStatus();
         delStatus.setStatusName("Wird bearbeitet");
         delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");

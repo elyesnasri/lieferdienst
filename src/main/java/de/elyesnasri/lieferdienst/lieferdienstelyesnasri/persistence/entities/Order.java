@@ -2,6 +2,7 @@ package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +37,16 @@ public class Order {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     private DeliveryStatus deliveryStatus;
+
+    @NotEmpty (message = "Bitten geben Sie Ihre Iban ein.")
+    private String senderIban;
+
+    @NotEmpty (message = "Bitten geben Sie das Password ein.")
+    private long senderAccountId;
+
+    @NotEmpty (message = "Bitten geben Sie das Password ein.")
+    private String senderAccountPassword;
+
 
     public Customer getRecipient() {
         return recipient;
@@ -92,5 +103,29 @@ public class Order {
         String code = UUID.randomUUID().toString();
         String date = new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
         this.orderNumber = code.concat(date);
+    }
+
+    public String getSenderIban() {
+        return senderIban;
+    }
+
+    public void setSenderIban(String senderIban) {
+        this.senderIban = senderIban;
+    }
+
+    public String getSenderAccountPassword() {
+        return senderAccountPassword;
+    }
+
+    public void setSenderAccountPassword(String senderAccountPassword) {
+        this.senderAccountPassword = senderAccountPassword;
+    }
+
+    public long getSenderAccountId() {
+        return senderAccountId;
+    }
+
+    public void setSenderAccountId(long senderAccountId) {
+        this.senderAccountId = senderAccountId;
     }
 }

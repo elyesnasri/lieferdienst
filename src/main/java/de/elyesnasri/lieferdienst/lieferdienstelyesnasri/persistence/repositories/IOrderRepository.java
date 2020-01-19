@@ -7,7 +7,4 @@ import java.util.Optional;
 
 public interface IOrderRepository extends CrudRepository<Order, Long> {
     Optional<Order> findOrderByorderNumber(String orderNumber);
-
-    // TODO: delete this
-    Optional<Order> findOrderByrecipient(String lastname);
 }
