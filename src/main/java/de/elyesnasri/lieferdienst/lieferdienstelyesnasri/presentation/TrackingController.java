@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -28,11 +29,11 @@ public class TrackingController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/tracking")
-    public String searchOrder(@ModelAttribute("searchOrder") SearchOrder searchOrder, Model model) {
+    public String searchOrder(@ModelAttribute("searchOrder") @Valid SearchOrder searchOrder, Model model) {
         String lastName = searchOrder.getLastName();
         int postalCode = searchOrder.getPlz();
 
-        Optional<Order> order = this.orderService.getParcelByNumber(searchOrder.getParcelNumber());
+        Optional<Order> order = this.orderService.getParcelByNumber(searchOrder.getOrderNumber());
         if (order.isPresent()) {
             String getLastName = order.get().getRecipient().getPersonalData().getLastName();
             int getPostalCode = order.get().getRecipient().getPersonalData().getAddress().getPostalCode();

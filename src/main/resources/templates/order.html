@@ -24,11 +24,6 @@
                 </option>
             </select>
             <div class="form-group col-md-6">
-                <label for="blablaid">Blbla</label>
-                <input th:field="*{blabla}" name="blabla" type="text" class="form-control" id="blablaid">
-                <span class="error" th:errors="*{blabla}"></span>
-            </div>
-            <div class="form-group col-md-6">
                 <label for="inputFirstNameSender">Vorname</label>
                 <input th:field="*{sender.personalData.firstName}" name="firstName" type="text" class="form-control" id="inputFirstNameSender">
                 <span class="error" th:errors="*{sender.personalData.firstName}"></span>
