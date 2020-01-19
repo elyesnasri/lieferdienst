@@ -3,6 +3,7 @@ package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class Order {
     @NotEmpty (message = "Bitten geben Sie Ihre Iban ein.")
     private String senderIban;
 
-    @NotEmpty (message = "Bitten geben Sie das Password ein.")
+    @NotNull(message = "Bitten geben Sie das Password ein.")
     private long senderAccountId;
 
     @NotEmpty (message = "Bitten geben Sie das Password ein.")
