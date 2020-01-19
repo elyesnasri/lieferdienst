@@ -32,12 +32,10 @@ public class OrderService implements IOrderService {
 
         transactionData.setAmount(order.getTotalPrice());
 
-        // sender
         transactionData.setSenderIban(order.getSenderIban());
         transactionData.setSenderCustomerAccountId(order.getSenderAccountId());
         transactionData.setSenderPassword(order.getSenderAccountPassword());
 
-        // empfänger
         transactionData.setReceiverIban("DE750300110000000004");
         transactionData.setUsageDetails("Lieferdienst sagt danke :)");
 
