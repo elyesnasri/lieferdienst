@@ -1,10 +1,10 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,17 +13,27 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
+
+    @Valid
     @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "recipientId")
     private Customer recipient;
+
+    @Valid
     @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "senderId")
     private Customer sender;
-    // TODO: get types from DB
-    @OneToOne
+
+    @OneToOne // TODO change to manytoone
     private Parcel parcelTypes;
+
     private String orderNumber;
+
     @Temporal(TemporalType.DATE)
     private Date orderDate;
+
     private int totalPrice;
+
     @ManyToOne(cascade = {CascadeType.ALL})
     private DeliveryStatus deliveryStatus;
 

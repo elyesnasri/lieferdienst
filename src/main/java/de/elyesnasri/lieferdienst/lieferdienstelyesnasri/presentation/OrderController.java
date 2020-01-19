@@ -8,15 +8,20 @@ import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.Pa
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
 @Controller
+@ControllerAdvice
 public class OrderController {
     @Autowired
     private final IOrderService orderService;
@@ -37,7 +42,12 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/order")
-    public String addOrder(@ModelAttribute("order") Order order, RedirectAttributes redirectAttributes) {
+    public String addOrder(Model model, @ModelAttribute("order") @Valid Order order, Errors errors) {
+
+        if (errors.hasErrors()) {
+            return "order";
+        }
+
         Date now = new Date();
         order.setOrderDate(now);
         // TODO: add assurance price for order

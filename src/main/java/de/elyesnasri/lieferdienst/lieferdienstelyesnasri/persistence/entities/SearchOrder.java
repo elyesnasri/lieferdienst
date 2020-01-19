@@ -1,10 +1,16 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 
+import javax.validation.constraints.NotEmpty;
+
 public class SearchOrder {
 
+    @NotEmpty(message = "Bitte geben Sie die Sendungsnummer ein.")
     private String parcelNumber;
+
+    @NotEmpty(message = "Bitte geben Sie den Nachnamen des Empfängers ein.")
     private String lastName;
-    private String firstName;
+
+    @NotEmpty(message = "Bitte geben Sie die Postleitzhal ein.")
     private int plz;
 
     public String getParcelNumber() {
@@ -21,14 +27,6 @@ public class SearchOrder {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public int getPlz() {

@@ -2,17 +2,30 @@ package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.enums.Salutation;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Embeddable
 public class PersonalData {
+
+    @NotEmpty(message = "Bitte geben Sie einen Vornamen ein.")
     private String firstName;
+
+    @NotEmpty(message = "Bitte geben Sie einen Nachnamen ein.")
     private String lastName;
+
     @Temporal(TemporalType.DATE)
     private Date birthDate;
+
     private String birthPlace;
+
     private Salutation salutation;
+
+    @Valid
     private Address address;
 
     public String getFirstName() {

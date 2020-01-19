@@ -1,12 +1,22 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Embeddable
 public class Address {
+
+    @NotEmpty(message = "Bitte geben Sie eine Straße ein.")
     private String street;
+
+    @NotNull(message = "Bitte geben Sie eine Postleitzahl ein.")
     private int postalCode;
+
+    @NotEmpty(message = "Bitte geben Sie einen Ort ein.")
     private String city;
+
+    @NotEmpty(message = "Bitte geben Sie ein Land ein.")
     private String country;
 
     public String getStreet() {

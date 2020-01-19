@@ -24,12 +24,19 @@
                 </option>
             </select>
             <div class="form-group col-md-6">
+                <label for="blablaid">Blbla</label>
+                <input th:field="*{blabla}" name="blabla" type="text" class="form-control" id="blablaid">
+                <span class="error" th:errors="*{blabla}"></span>
+            </div>
+            <div class="form-group col-md-6">
                 <label for="inputFirstNameSender">Vorname</label>
-                <input th:field="*{sender.personalData.firstName}" type="text" class="form-control" id="inputFirstNameSender">
+                <input th:field="*{sender.personalData.firstName}" name="firstName" type="text" class="form-control" id="inputFirstNameSender">
+                <span class="error" th:errors="*{sender.personalData.firstName}"></span>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputLastNameSender">Nachname</label>
-                <input th:field="*{sender.personalData.lastName}" type="text" class="form-control" id="inputLastNameSender">
+                <input th:field="*{sender.personalData.lastName}" name="lastName" type="text" class="form-control" id="inputLastNameSender">
+                <span class="error" th:errors="*{sender.personalData.lastName}"></span>
             </div>
         </div>
         <div class="form-group">
@@ -44,18 +51,22 @@
             <div class="form-group col-md-8">
                 <label for="inputStreetSender">Straße</label>
                 <input th:field="*{sender.personalData.address.street}" type="text" class="form-control" id="inputStreetSender">
+                <span class="error" th:errors="*{sender.personalData.address.street}"></span>
             </div>
             <div class="form-group col-md-4">
                 <label for="inputCodeSender">PLZ</label>
                 <input th:field="*{sender.personalData.address.postalCode}" type="text" class="form-control" id="inputCodeSender">
+                <span class="error" th:errors="*{sender.personalData.address.postalCode}"></span>
             </div>
             <div class="form-group col-md-4">
                 <label for="inputCitySender">Stadt</label>
                 <input th:field="*{sender.personalData.address.city}" type="text" class="form-control" id="inputCitySender">
+                <span class="error" th:errors="*{sender.personalData.address.city}"></span>
             </div>
             <div class="form-group col-md-8">
                 <label for="inputCountrySender">Land</label>
                 <input th:field="*{sender.personalData.address.country}" type="text" class="form-control" id="inputCountrySender">
+                <span class="error" th:errors="*{sender.personalData.address.country}"></span>
             </div>
         </div>
         <h3>Empfänger</h3>
@@ -69,10 +80,12 @@
             <div class="form-group col-md-6">
                 <label for="inputFirstNameRecipient">Vorname</label>
                 <input th:field="*{recipient.personalData.firstName}" type="text" class="form-control" id="inputFirstNameRecipient">
+                <span class="error" th:errors="*{recipient.personalData.firstName}"></span>
             </div>
             <div class="form-group col-md-6">
                 <label for="inputLastNameRecipient">Nachname</label>
                 <input th:field="*{recipient.personalData.lastName}" type="text" class="form-control" id="inputLastNameRecipient">
+                <span class="error" th:errors="*{recipient.personalData.lastName}"></span>
             </div>
         </div>
         <div class="form-group">
@@ -87,18 +100,22 @@
             <div class="form-group col-md-8">
                 <label for="inputStreetRecipient">Straße</label>
                 <input th:field="*{recipient.personalData.address.street}" type="text" class="form-control" id="inputStreetRecipient">
+                <span class="error" th:errors="*{recipient.personalData.address.street}"></span>
             </div>
             <div class="form-group col-md-4">
                 <label for="inputCodeRecipient">PLZ</label>
                 <input th:field="*{recipient.personalData.address.postalCode}" type="text" class="form-control" id="inputCodeRecipient">
+                <span class="error" th:errors="*{recipient.personalData.address.postalCode}"></span>
             </div>
             <div class="form-group col-md-4">
                 <label for="inputCityRecipient">Stadt</label>
                 <input th:field="*{recipient.personalData.address.city}" type="text" class="form-control" id="inputCityRecipient">
+                <span class="error" th:errors="*{recipient.personalData.address.city}"></span>
             </div>
             <div class="form-group col-md-8">
                 <label for="inputCountryRecipient">Land</label>
                 <input th:field="*{recipient.personalData.address.country}" type="text" class="form-control" id="inputCountryRecipient">
+                <span class="error" th:errors="*{recipient.personalData.address.country}"></span>
             </div>
         </div>
         <h3>Produktauswahl</h3>
