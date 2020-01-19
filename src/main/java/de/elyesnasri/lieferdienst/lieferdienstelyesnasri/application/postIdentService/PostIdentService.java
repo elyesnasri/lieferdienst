@@ -5,6 +5,9 @@ import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.repositorie
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.Optional;
+
 @Service
 public class PostIdentService implements IPostIdentService {
 
@@ -17,11 +20,13 @@ public class PostIdentService implements IPostIdentService {
 
     @Override
     public boolean verifyCustomer(VerifyPostIdent verifyPostIdent) {
-
-        Iterable<PostIdentEntry> verifiedCustomers = postIdentRepository.findAll();
-        for (PostIdentEntry customer: verifiedCustomers         ) {
-            if (customer.equals(verifyPostIdent.getPersonalData().getLastName())) {
-                // check birthday
+        Date postIdentBirthDate = verifyPostIdent.getPersonalData().getBirthDate();
+        Optional<PostIdentEntry> checkPostIdent = postIdentRepository.findPostIdentByLastName(postIdentBirthDate);
+        if (checkPostIdent.isPresent()) {
+            String checkLastName = checkPostIdent.get().getPersonalData().getLastName();
+            String postIdentLastName = verifyPostIdent.getPersonalData().getLastName();
+            if (checkLastName.equals(postIdentLastName)) {
+                return true;
             }
         }
         return false;
