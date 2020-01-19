@@ -27,7 +27,8 @@ public class OrderService implements IOrderService {
     public void sendParcel(Order order) {
 
         this.orderRepository.save(order);
-        // TODO: call marco for payment
+
+        // send transaction to marco.edenbank
         TransactionData transactionData = new TransactionData();
 
         transactionData.setAmount(order.getTotalPrice());
@@ -41,7 +42,6 @@ public class OrderService implements IOrderService {
 
         ResponseEntity<TransactionData> call = restClient.postForEntity("http://im-codd:8847/apis/transaction/execute", transactionData, TransactionData.class);
         call.getStatusCode();
-
     }
 
     @Override

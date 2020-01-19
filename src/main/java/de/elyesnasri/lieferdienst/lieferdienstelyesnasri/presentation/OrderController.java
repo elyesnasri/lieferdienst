@@ -1,19 +1,15 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.presentation;
 
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.IOrderService;
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.SendOrder;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.parcelService.IParcelService;
-import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.DeliveryStatus;
-import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.Order;
-import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.Parcel;
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -61,6 +57,36 @@ public class OrderController {
         orderService.sendParcel(order);
 
         return "redirect:/confirm/"+ order.getOrderNumber();
+    }
 
+    @RequestMapping(value = "apis/order/makeOrder", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public String makeOrder (@RequestBody SendOrder sendOrder) {
+        Order order = new Order();
+        Customer sender = new Customer();
+        Customer recipient = new Customer();
+
+        sender.setPersonalData(sendOrder.getSenderData());
+        recipient.setPersonalData(sendOrder.getRecipientData());
+
+        order.setSender(sender);
+        order.setRecipient(recipient);
+        // the price of orders from shopsystems are set to 4€
+        order.setTotalPrice(4);
+        DeliveryStatus delStatus = new DeliveryStatus();
+        delStatus.setStatusName("Wird bearbeitet");
+        delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
+        order.setDeliveryStatus(delStatus);
+        order.setParcelNumber();
+        Date now = new Date();
+        order.setOrderDate(now);
+
+        // payment details
+        order.setSenderAccountId(3);
+        order.setSenderAccountPassword("Elyes");
+        order.setSenderIban("DE750300110000000004");
+
+        orderService.sendParcel(order);
+        return "Thanks";
     }
 }
