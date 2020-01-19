@@ -14,6 +14,10 @@ public class Parcel {
     private int length;
     private int weight;
 
+    public long getParcelId() {
+        return parcelId;
+    }
+
     public String getType() {
         return type;
     }

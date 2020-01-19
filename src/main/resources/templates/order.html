@@ -102,14 +102,9 @@
             </div>
         </div>
         <h3>Produktauswahl</h3>
-        <select th:field="*{parcelTypes}">
-            <option value="S" selected>2Kg - 3€</option>
-            <option value="M">5Kg - 5€</option>
-            <option value="L">10Kg - 7€</option>
-        </select>
         <select th:field="*{parcelTypes}" id="selectparcelType">
             <option th:each="parcel: ${parcels}"
-                    th:value="${parcel.type}"
+                    th:value="${parcel.parcelId}"
                     th:text="${parcel.price}">
             </option>
         </select>
