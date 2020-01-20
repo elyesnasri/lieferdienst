@@ -46,47 +46,58 @@ public class OrderController {
 
         Date now = new Date();
         order.setOrderDate(now);
-        // TODO: add assurance price for order
-        // TODO: add parcelPRice with AssurancePrice to get totalprice
         order.setTotalPrice(order.getParcelTypes().getPrice());
         DeliveryStatus delStatus = new DeliveryStatus();
         delStatus.setStatusName("Wird bearbeitet");
         delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
         order.setDeliveryStatus(delStatus);
         order.setParcelNumber();
-        orderService.sendParcel(order);
+
+        boolean payment = orderService.sendParcel(order);
+        if (!payment) {
+            return "order";
+        }
 
         return "redirect:/confirm/"+ order.getOrderNumber();
     }
 
     @RequestMapping(value = "apis/order/makeOrder", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public String makeOrder (@RequestBody SendOrder sendOrder) {
+    public Boolean makeOrder (@RequestBody SendOrder sendOrder) {
         Order order = new Order();
         Customer sender = new Customer();
         Customer recipient = new Customer();
+        Parcel parcel = new Parcel();
 
         sender.setPersonalData(sendOrder.getSenderData());
         recipient.setPersonalData(sendOrder.getRecipientData());
-
         order.setSender(sender);
         order.setRecipient(recipient);
-        // the price of orders from shopsystems are set to 4€
-        order.setTotalPrice(4);
+
         DeliveryStatus delStatus = new DeliveryStatus();
         delStatus.setStatusName("Wird bearbeitet");
         delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
         order.setDeliveryStatus(delStatus);
+
         order.setParcelNumber();
         Date now = new Date();
         order.setOrderDate(now);
 
-        // payment details
-        order.setSenderAccountId(3);
-        order.setSenderAccountPassword("Elyes");
-        order.setSenderIban("DE750300110000000004");
+        parcel.setWeight(sendOrder.getParcelWeight());
+        // the price of orders from shopsystems are set to 4€
+        parcel.setPrice(4);
+        order.setTotalPrice(parcel.getPrice());
+        order.setParcelTypes(parcel);
 
-        orderService.sendParcel(order);
-        return "Thanks";
+        order.setSenderAccountId(sendOrder.getSenderAccountId());
+        order.setSenderAccountPassword(sendOrder.getSenderAccountPassword());
+        order.setSenderIban(sendOrder.getSenderIban());
+
+        boolean payment = orderService.sendParcel(order);
+        if (!payment) {
+            return false;
+        }
+
+        return true;
     }
 }

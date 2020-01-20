@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface IPostIdentRepository extends CrudRepository<PostIdentEntry, Long> {
 //    Optional<PostIdentEntry> findPostIdentByPersonalData(String lastName);
     @Query(value = "SELECT s FROM PostIdentEntry s WHERE s.personalData.birthDate LIKE :birthDate")
-    Optional<PostIdentEntry> findPostIdentByLastName(@Param("birthDate") Date birthDate);
+    Optional<PostIdentEntry> findPostIdentByBirthDate(@Param("birthDate") Date birthDate);
 }

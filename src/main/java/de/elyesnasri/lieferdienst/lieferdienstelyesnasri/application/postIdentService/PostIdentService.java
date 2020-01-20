@@ -21,7 +21,7 @@ public class PostIdentService implements IPostIdentService {
     @Override
     public boolean verifyCustomer(VerifyPostIdent verifyPostIdent) {
         Date postIdentBirthDate = verifyPostIdent.getPersonalData().getBirthDate();
-        Optional<PostIdentEntry> checkPostIdent = postIdentRepository.findPostIdentByLastName(postIdentBirthDate);
+        Optional<PostIdentEntry> checkPostIdent = postIdentRepository.findPostIdentByBirthDate(postIdentBirthDate);
         if (checkPostIdent.isPresent()) {
             String checkLastName = checkPostIdent.get().getPersonalData().getLastName();
             String postIdentLastName = verifyPostIdent.getPersonalData().getLastName();

@@ -24,10 +24,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public void sendParcel(Order order) {
-
-        this.orderRepository.save(order);
-
+    public boolean sendParcel(Order order) {
         // send transaction to marco.edenbank
         TransactionData transactionData = new TransactionData();
 
@@ -40,8 +37,13 @@ public class OrderService implements IOrderService {
         transactionData.setReceiverIban("DE750300110000000004");
         transactionData.setUsageDetails("Lieferdienst sagt danke :)");
 
-        ResponseEntity<TransactionData> call = restClient.postForEntity("http://im-codd:8847/apis/transaction/execute", transactionData, TransactionData.class);
-        call.getStatusCode();
+        ResponseEntity<TransactionData> payment = restClient.postForEntity("http://im-codd:8847/apis/transaction/execute", transactionData, TransactionData.class);
+        if (!payment.getStatusCode().is2xxSuccessful()){
+            return false;
+        }
+
+        this.orderRepository.save(order);
+        return true;
     }
 
     @Override
