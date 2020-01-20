@@ -26,7 +26,7 @@ public class Order {
     @JoinColumn(name = "senderId")
     private Customer sender;
 
-    @OneToOne // TODO change to manytoone
+    @OneToOne(cascade = {CascadeType.ALL})
     private Parcel parcelTypes;
 
     private String orderNumber;

@@ -38,12 +38,11 @@ public class OrderService implements IOrderService {
         transactionData.setUsageDetails("Lieferdienst sagt danke :)");
 
         ResponseEntity<TransactionData> payment = restClient.postForEntity("http://im-codd:8847/apis/transaction/execute", transactionData, TransactionData.class);
-        if (!payment.getStatusCode().is2xxSuccessful()){
-            return false;
+        if (payment.getStatusCode().is2xxSuccessful()){
+            this.orderRepository.save(order);
+            return true;
         }
-
-        this.orderRepository.save(order);
-        return true;
+        return false;
     }
 
     @Override

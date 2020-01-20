@@ -143,11 +143,11 @@
                     <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="selectparcelType">Anrede</label>
-                                <select th:field="*{parcelTypes}" id="selectparcelType" class="form-control">
+                                <label for="selectparcelType">Produktauswahl</label>
+                                <select th:field="*{parcelTypes}" id="selectparcelType" class="custom-select custom-select-lg mb-3">
                                     <option th:each="parcel: ${parcels}"
                                             th:value="${parcel.parcelId}"
-                                            th:text="${parcel.price}">
+                                            th:text="${ parcel.weight + ' Kg - Paket Größe ' +  parcel.type + ' - ' + parcel.price + '€'}">
                                     </option>
                                 </select>
                             </div>
