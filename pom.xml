@@ -95,6 +95,7 @@
 				<configuration>
 					<mainClass>de.elyesnasri.lieferdienst.lieferdienstelyesnasri.LieferdienstElyesnasriApplication</mainClass>
 					<executable>true</executable>
+					<includeSystemScope>true</includeSystemScope>
 				</configuration>
 				<executions>
 					<execution>
