@@ -11,13 +11,48 @@
     <title>Auftrag bestätigt!</title>
 </head>
 <body>
-<div class="container">
-    <h1>Die Daten wurden erfolgreich übertragen!</h1>
-    <h3>Deine Paketnummer lautet:</h3>
-<!--  refactor type to code  -->
-    <h4><tr th:text="${number}"></h4>
-    <a th:href="@{~/tracking}">Jetzt Paket verfolgen</a>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Geschafft!</h1>
+        <p class="lead">Die Daten wurden erfolgreich übertragen!</p>
+    </div>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Deine Paketnummer lautet:</h5>
+                    <p id="orderNumber" class="card-text" th:text="${number}"></p>
+                    <button type="button" class="btn btn-lg btn-outline-light" onclick="copyNumber()">Nummer kopieren</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Paket verfolgen</h5>
+                    <p class="card-text">Sie können Sie Ihre Pakete verfolgen</p>
+                    <a th:href="@{~/tracking}" class="btn btn-lg btn-light">Verfolgen</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav th:replace="navbottom/navbarbottom.html :: navbarbottom"> </nav>
+</div>
+
+<script>
+function copyNumber() {
+  var orderNumber = document.getElementById("orderNumber").innerText;
+  var elem = document.createElement("textarea");
+  document.body.appendChild(elem);
+  elem.value = orderNumber
+  elem.select();
+  document.execCommand("copy");
+  alert("Die Paketnummer wurde kopiert: " + elem.value);
+  document.body.removeChild(elem);
+}
+</script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

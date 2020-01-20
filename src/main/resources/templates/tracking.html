@@ -11,30 +11,34 @@
     <title>Paket Verfolgen</title>
 </head>
 <body>
-<div class="container">
-    <h1>Paket verfolgen</h1>
-    <h3>Geben PLZ und Name oder Paket Nummer ein</h3>
-    <div><tr th:unless="${#strings.isEmpty(error)}">
-        <h4 th:text="${error}"></h4>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Paket verfolgen</h1>
+        <p class="lead">Geben Sie die Postleitzahl, den Nachnamen und die Paketnummer ein.</p>
     </div>
-    <h4><tr th:text="${type}"></h4>
+</div>
+<div class="container">
+    <div class="alert alert-danger" role="alert" th:unless="${#strings.isEmpty(error)}">
+        <span th:text="${error}"></span>
+    </div>
     <form th:action="@{/tracking}" th:object="${searchOrder}" method="post">
         <div class="form-row">
+            <div class="form-group col-md-12">
+                <label for="inputCode">Paketnummer</label>
+                <input th:field="*{orderNumber}" type="text" class="form-control" id="inputCode">
+            </div>
             <div class="form-group col-md-6">
                 <label for="inputLastNameRecipient">Nachname</label>
                 <input th:field="*{lastName}" type="text" class="form-control" id="inputLastNameRecipient">
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
                 <label for="inputCodeRecipient">PLZ</label>
                 <input th:field="*{plz}" type="text" class="form-control" id="inputCodeRecipient">
             </div>
-            <div class="form-group col-md-6">
-                <label for="inputCode">Sendungsnummer</label>
-                <input th:field="*{orderNumber}" type="text" class="form-control" id="inputCode">
-            </div>
         </div>
-        <button type="submit" class="btn btn-primary">verfolgen</button>
+        <button type="submit" class="btn btn-outline-success btn-lg">verfolgen</button>
     </form>
+    <nav th:replace="navbottom/navbarbottom.html :: navbarbottom"> </nav>
 </div>
 
 <!-- Optional JavaScript -->
