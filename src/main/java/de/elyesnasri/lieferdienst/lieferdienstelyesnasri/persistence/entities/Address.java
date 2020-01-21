@@ -11,7 +11,7 @@ public class Address {
     private String street;
 
     @NotNull(message = "Bitte geben Sie eine Postleitzahl ein.")
-    private int postalCode;
+    private Integer postalCode;
 
     @NotEmpty(message = "Bitte geben Sie einen Ort ein.")
     private String city;
@@ -27,11 +27,11 @@ public class Address {
         this.street = street;
     }
 
-    public int getPostalCode() {
+    public Integer getPostalCode() {
         return postalCode;
     }
 
-    public void setPostalCode(int postalCode) {
+    public void setPostalCode(Integer postalCode) {
         this.postalCode = postalCode;
     }
 

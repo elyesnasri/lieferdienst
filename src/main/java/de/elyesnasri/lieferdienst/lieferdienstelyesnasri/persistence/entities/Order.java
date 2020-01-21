@@ -43,7 +43,7 @@ public class Order {
     private String senderIban;
 
     @NotNull(message = "Bitten geben Sie das Password ein.")
-    private long senderAccountId;
+    private Long senderAccountId;
 
     @NotEmpty (message = "Bitten geben Sie das Password ein.")
     private String senderAccountPassword;
@@ -122,11 +122,11 @@ public class Order {
         this.senderAccountPassword = senderAccountPassword;
     }
 
-    public long getSenderAccountId() {
+    public Long getSenderAccountId() {
         return senderAccountId;
     }
 
-    public void setSenderAccountId(long senderAccountId) {
+    public void setSenderAccountId(Long senderAccountId) {
         this.senderAccountId = senderAccountId;
     }
 }

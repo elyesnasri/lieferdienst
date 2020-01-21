@@ -73,7 +73,7 @@ public class OrderService implements IOrderService {
         this.orderRepository.save(order);
     }
 
-    @Scheduled(cron = "0 */1 * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void autoChangeStatus() {
         Iterable<Order> orders = this.orderRepository.findAll();
         for (Order order: orders) {
