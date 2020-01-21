@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    @Transactional
     public boolean sendOrder(Order order) {
         // send transaction to marco.edenbank
         TransactionData transactionData = new TransactionData();
@@ -69,11 +71,13 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    @Transactional (propagation = Propagation.REQUIRED)
     public void updateOrderStatus(Order order) {
         this.orderRepository.save(order);
     }
 
     @Scheduled(cron = "*/30 * * * * *")
+    @Transactional
     public void autoChangeStatus() {
         Iterable<Order> orders = this.orderRepository.findAll();
         for (Order order: orders) {

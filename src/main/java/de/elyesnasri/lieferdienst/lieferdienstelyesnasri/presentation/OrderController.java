@@ -45,6 +45,8 @@ public class OrderController {
     public String addOrder(Model model, @ModelAttribute("order") @Valid Order order, Errors errors) {
 
         if (errors.hasErrors()) {
+            List<Parcel> parcels = (List<Parcel>) parcelService.getAllParcels();
+            model.addAttribute("parcels", parcels);
             return "order";
         }
 
