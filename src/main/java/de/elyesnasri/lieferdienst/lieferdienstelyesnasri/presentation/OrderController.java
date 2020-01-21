@@ -1,9 +1,11 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.presentation;
 
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.deliveryStatusService.IDeliveryStatusService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.IOrderService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.SendOrder;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.parcelService.IParcelService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.*;
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +24,13 @@ public class OrderController {
     private final IOrderService orderService;
     @Autowired
     private  final IParcelService parcelService;
+    @Autowired
+    private final IDeliveryStatusService deliveryStatusService;
 
-    public OrderController(IOrderService orderService, IParcelService parcelService) {
+    public OrderController(IOrderService orderService, IParcelService parcelService, IDeliveryStatusService deliveryStatusService) {
         this.orderService = orderService;
         this.parcelService = parcelService;
+        this.deliveryStatusService = deliveryStatusService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/order")
@@ -46,10 +51,12 @@ public class OrderController {
         Date now = new Date();
         order.setOrderDate(now);
         order.setTotalPrice(order.getParcelTypes().getPrice());
-        DeliveryStatus delStatus = new DeliveryStatus();
-        delStatus.setStatusName("Wird bearbeitet");
-        delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
-        order.setDeliveryStatus(delStatus);
+
+        Optional<DeliveryStatus> delStatus = this.deliveryStatusService.getDeliveryStatus(Status.Step1.getText());
+        if (delStatus.isPresent()) {
+            order.setDeliveryStatus(delStatus.get());
+        }
+
         order.setParcelNumber();
 
         boolean payment = orderService.sendParcel(order);
@@ -72,10 +79,10 @@ public class OrderController {
         order.setSender(sender);
         order.setRecipient(recipient);
 
-        DeliveryStatus delStatus = new DeliveryStatus();
-        delStatus.setStatusName("Wird bearbeitet");
-        delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
-        order.setDeliveryStatus(delStatus);
+        Optional<DeliveryStatus> delStatus = this.deliveryStatusService.getDeliveryStatus(Status.Step1.getText());
+        if (delStatus.isPresent()) {
+            order.setDeliveryStatus(delStatus.get());
+        }
 
         order.setParcelNumber();
         Date now = new Date();

@@ -56,4 +56,9 @@ public class OrderService implements IOrderService {
         Optional<Order> order = this.orderRepository.findOrderByorderNumber(parcelNumber);
         return order;
     }
+
+    @Override
+    public void updateOrderStatus(Order order) {
+        this.orderRepository.save(order);
+    }
 }

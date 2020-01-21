@@ -8,4 +8,5 @@ public interface IOrderService {
     boolean sendParcel(Order order);
     Optional<Order> getParcel (long id);
     Optional<Order> getParcelByNumber (String parcelNumber);
+    void updateOrderStatus (Order order);
 }

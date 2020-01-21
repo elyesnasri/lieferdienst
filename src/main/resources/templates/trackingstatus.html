@@ -21,13 +21,13 @@
     <div class="card">
         <div class="card-header">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                <div class="progress-bar" role="progressbar" th:style="${'width: ' + order.deliveryStatus.percent + '%;'}" th:aria-valuenow="${order.deliveryStatus.percent}" aria-valuemin="0" aria-valuemax="100"><span th:text="${order.deliveryStatus.percent}"></span></div>
             </div>
         </div>
         <div class="card-body">
             <blockquote class="blockquote mb-0">
                 <p>PLZ: <span><tr th:text="${order.recipient.personalData.address.postalCode}"></span></p>
-                <footer class="blockquote-footer">Status: <cite title="Source Title"><span th:text="${order.deliveryStatus.statusName}"></span></cite></footer>
+                <footer class="blockquote-footer">Status: <cite title="Source Title"><span th:text="${order.deliveryStatus.name}"></span></cite></footer>
                 <footer class="blockquote-footer">Beschreibung: <cite title="Source Title"><span th:text="${order.deliveryStatus.description}"></span></cite></footer>
             </blockquote>
         </div>

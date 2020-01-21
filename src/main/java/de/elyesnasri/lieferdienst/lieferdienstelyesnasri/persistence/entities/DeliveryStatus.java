@@ -7,15 +7,16 @@ public class DeliveryStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long deliveryStatusId;
-    private String statusName;
+    private String name;
     private String description;
+    private String percent;
 
-    public String getStatusName() {
-        return statusName;
+    public String getName() {
+        return name;
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -24,5 +25,13 @@ public class DeliveryStatus {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPercent() {
+        return percent;
+    }
+
+    public void setPercent(String percent) {
+        this.percent = percent;
     }
 }
