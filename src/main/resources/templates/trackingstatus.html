@@ -21,7 +21,7 @@
     <div class="card">
         <div class="card-header">
             <div class="progress">
-                <div class="progress-bar" role="progressbar" th:style="${'width: ' + order.deliveryStatus.percent + '%;'}" th:aria-valuenow="${order.deliveryStatus.percent}" aria-valuemin="0" aria-valuemax="100"><span th:text="${order.deliveryStatus.percent}"></span></div>
+                <div class="progress-bar" role="progressbar" th:style="${'width: ' + order.deliveryStatus.percent + '%;'}" th:aria-valuenow="${order.deliveryStatus.percent}" aria-valuemin="0" aria-valuemax="100"><span th:text="${order.deliveryStatus.percent + ' %'}"></span></div>
             </div>
         </div>
         <div class="card-body">

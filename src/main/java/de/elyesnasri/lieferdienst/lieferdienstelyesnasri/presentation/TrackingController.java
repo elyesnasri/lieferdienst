@@ -33,7 +33,7 @@ public class TrackingController {
         String lastName = searchOrder.getLastName();
         int postalCode = searchOrder.getPlz();
 
-        Optional<Order> order = this.orderService.getParcelByNumber(searchOrder.getOrderNumber());
+        Optional<Order> order = this.orderService.getOrderByNumber(searchOrder.getOrderNumber());
         if (order.isPresent()) {
             String getLastName = order.get().getRecipient().getPersonalData().getLastName();
             int getPostalCode = order.get().getRecipient().getPersonalData().getAddress().getPostalCode();

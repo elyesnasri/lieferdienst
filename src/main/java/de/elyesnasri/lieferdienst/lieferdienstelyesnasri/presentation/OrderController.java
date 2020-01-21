@@ -59,7 +59,7 @@ public class OrderController {
 
         order.setParcelNumber();
 
-        boolean payment = orderService.sendParcel(order);
+        boolean payment = orderService.sendOrder(order);
         if (!payment) {
             return "order";
         }
@@ -97,7 +97,7 @@ public class OrderController {
         order.setSenderAccountPassword(sendOrder.getSenderAccountPassword());
         order.setSenderIban(sendOrder.getSenderIban());
 
-        boolean payment = orderService.sendParcel(order);
+        boolean payment = orderService.sendOrder(order);
         if (!payment) {
             return false;
         }
