@@ -5,6 +5,8 @@ import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.repositorie
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ParcelService implements IParcelService {
 
@@ -21,8 +23,14 @@ public class ParcelService implements IParcelService {
     }
 
     @Override
-    public Iterable<Parcel> getAllPArcels() {
+    public Iterable<Parcel> getAllParcels() {
         Iterable<Parcel> parcels = this.parcelRepository.findAll();
         return parcels;
+    }
+
+    @Override
+    public Optional<Parcel> getParcel(int weight) {
+        Optional<Parcel> parcel = this.parcelRepository.findParcelByWeight(weight);
+        return parcel;
     }
 }
