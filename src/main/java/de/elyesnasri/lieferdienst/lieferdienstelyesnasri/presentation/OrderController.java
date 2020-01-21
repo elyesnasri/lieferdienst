@@ -1,20 +1,21 @@
 package de.elyesnasri.lieferdienst.lieferdienstelyesnasri.presentation;
 
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.deliveryStatusService.IDeliveryStatusService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.IOrderService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.orderService.SendOrder;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.application.parcelService.IParcelService;
 import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.*;
+import de.elyesnasri.lieferdienst.lieferdienstelyesnasri.persistence.entities.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @ControllerAdvice
@@ -23,15 +24,18 @@ public class OrderController {
     private final IOrderService orderService;
     @Autowired
     private  final IParcelService parcelService;
+    @Autowired
+    private final IDeliveryStatusService deliveryStatusService;
 
-    public OrderController(IOrderService orderService, IParcelService parcelService) {
+    public OrderController(IOrderService orderService, IParcelService parcelService, IDeliveryStatusService deliveryStatusService) {
         this.orderService = orderService;
         this.parcelService = parcelService;
+        this.deliveryStatusService = deliveryStatusService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/order")
     public String getOrder (Model model) {
-        List<Parcel> parcels = (List<Parcel>) parcelService.getAllPArcels();
+        List<Parcel> parcels = (List<Parcel>) parcelService.getAllParcels();
         model.addAttribute("parcels", parcels);
         model.addAttribute("order", new Order());
         return "order";
@@ -47,13 +51,15 @@ public class OrderController {
         Date now = new Date();
         order.setOrderDate(now);
         order.setTotalPrice(order.getParcelTypes().getPrice());
-        DeliveryStatus delStatus = new DeliveryStatus();
-        delStatus.setStatusName("Wird bearbeitet");
-        delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
-        order.setDeliveryStatus(delStatus);
+
+        Optional<DeliveryStatus> delStatus = this.deliveryStatusService.getDeliveryStatus(Status.Step1.getText());
+        if (delStatus.isPresent()) {
+            order.setDeliveryStatus(delStatus.get());
+        }
+
         order.setParcelNumber();
 
-        boolean payment = orderService.sendParcel(order);
+        boolean payment = orderService.sendOrder(order);
         if (!payment) {
             return "order";
         }
@@ -67,37 +73,56 @@ public class OrderController {
         Order order = new Order();
         Customer sender = new Customer();
         Customer recipient = new Customer();
-        Parcel parcel = new Parcel();
 
         sender.setPersonalData(sendOrder.getSenderData());
         recipient.setPersonalData(sendOrder.getRecipientData());
         order.setSender(sender);
         order.setRecipient(recipient);
 
-        DeliveryStatus delStatus = new DeliveryStatus();
-        delStatus.setStatusName("Wird bearbeitet");
-        delStatus.setDescription("Die Daten der Sendung wurden erfolgreich übermittelt.");
-        order.setDeliveryStatus(delStatus);
+        Optional<DeliveryStatus> delStatus = this.deliveryStatusService.getDeliveryStatus(Status.Step1.getText());
+        if (delStatus.isPresent()) {
+            order.setDeliveryStatus(delStatus.get());
+        }
 
         order.setParcelNumber();
         Date now = new Date();
         order.setOrderDate(now);
 
-        parcel.setWeight(sendOrder.getParcelWeight());
-        // the price of orders from shopsystems are set to 4€
-        parcel.setPrice(4);
-        order.setTotalPrice(parcel.getPrice());
+        int sendOrderParcelWeight = sendOrder.getParcelWeight();
+        Parcel parcel = checkParcelType(sendOrderParcelWeight);
         order.setParcelTypes(parcel);
+        order.setTotalPrice(parcel.getPrice());
 
         order.setSenderAccountId(sendOrder.getSenderAccountId());
         order.setSenderAccountPassword(sendOrder.getSenderAccountPassword());
         order.setSenderIban(sendOrder.getSenderIban());
 
-        boolean payment = orderService.sendParcel(order);
+        boolean payment = orderService.sendOrder(order);
         if (!payment) {
             return false;
         }
 
         return true;
+    }
+
+    Parcel checkParcelType (int weight){
+        if (weight <= 2) {
+            Optional<Parcel> parcel = this.parcelService.getParcel(2);
+            if (parcel.isPresent()) {
+                return parcel.get();
+            }
+        } else if (weight <= 5) {
+            Optional<Parcel> parcel = this.parcelService.getParcel(5);
+            if (parcel.isPresent()) {
+                return parcel.get();
+            }
+        }
+
+        Parcel parcelByType = null;
+        Optional<Parcel> parcel = this.parcelService.getParcel(10);
+        if (parcel.isPresent()) {
+            parcelByType = parcel.get();
+        }
+        return parcelByType;
     }
 }
